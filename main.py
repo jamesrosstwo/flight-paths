@@ -4,7 +4,7 @@ import pygame
 
 pygame.init()
 
-BOARDWIDTH = 1000
+BOARDWIDTH = 1500
 BOARDHEIGHT = 800
 FRAMERATE = 60
 
@@ -20,7 +20,12 @@ def loadImages():
 
 def drawWindow():
     global images
-    win.blit(images['map'], (0, 0))
+    map = images['map']
+    size = map.get_rect().size
+    ratio = BOARDWIDTH / size[0]
+    images['map'] = pygame.transform.smoothscale(map, (int(size[0] * ratio), int(size[1] * ratio)))
+
+    win.blit(map, (0, 0))
     pygame.display.update()
 
 
