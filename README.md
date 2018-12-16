@@ -2,8 +2,8 @@
 
 A graph theory python simulation of flight paths.
 
-## Setup
+## Installation
 
-```bash
+```
 pip install -r requirements.txt
 ```
