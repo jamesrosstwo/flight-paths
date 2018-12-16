@@ -20,14 +20,13 @@ def loadImages():
 
 def drawWindow():
     global images
-    win.blit(images['map'], (0,0))
+    win.blit(images['map'], (0, 0))
     pygame.display.update()
 
 
 win = pygame.display.set_mode((BOARDWIDTH, BOARDHEIGHT))
 pygame.display.set_caption("Flight Paths")
 images = loadImages()
-
 
 # Game Loop
 run = True
