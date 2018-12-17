@@ -9,7 +9,6 @@ BOARDHEIGHT = 800
 FRAMERATE = 60
 
 
-
 def load_images():
     out = {}
     images_path = 'resources/images'
@@ -40,6 +39,12 @@ def populate_locations():
     return out
 
 
+def populate_input_boxes():
+    from_box = InputBox(pg, 0, 0, 140, 40)
+    to_box = InputBox(pg, 100, 300, 140, 40)
+    return {'from': from_box, 'to': to_box}
+
+
 def draw_window():
     global images
     map = images['map']
@@ -53,9 +58,7 @@ win = pg.display.set_mode((BOARDWIDTH, BOARDHEIGHT))
 pg.display.set_caption("Flight Paths")
 images = load_images()
 locations = populate_locations()
-input_box1 = InputBox(0, 0, 140, 32)
-input_box2 = InputBox(100, 300, 140, 32)
-input_boxes = [input_box1, input_box2]
+input_boxes = InputBox.populate_input_boxes()
 
 # Game Loop
 run = True
