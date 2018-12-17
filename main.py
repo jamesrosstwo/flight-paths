@@ -4,9 +4,10 @@ from InputBox import InputBox
 
 pg.init()
 
-BOARDWIDTH = 1500
-BOARDHEIGHT = 900
-FRAMERATE = 60
+SCREEN_WIDTH = 1500
+SCREEN_HEIGHT = 750
+FRAME_RATE = 60
+current_path = ["", ""]
 
 
 def load_images():
@@ -44,19 +45,19 @@ def populate_input_boxes():
     from_box = InputBox(pg,
                         "From",
                         text_box_size[0] / 2,
-                        BOARDHEIGHT - text_box_size[1] * 1.25,
+                        SCREEN_HEIGHT - text_box_size[1] * 1.25,
                         text_box_size[0],
                         text_box_size[1])
     to_box = InputBox(pg,
                       "To",
-                      BOARDWIDTH / 2 - text_box_size[0] / 2,
-                      BOARDHEIGHT - text_box_size[1] * 1.25,
+                      SCREEN_WIDTH / 2 - text_box_size[0] / 2,
+                      SCREEN_HEIGHT - text_box_size[1] * 1.25,
                       text_box_size[0],
                       text_box_size[1])
     max_dist_box = InputBox(pg,
                             "Range",
-                            BOARDWIDTH - text_box_size[0] * 3 / 2,
-                            BOARDHEIGHT - text_box_size[1] * 1.25,
+                            SCREEN_WIDTH - text_box_size[0] * 3 / 2,
+                            SCREEN_HEIGHT - text_box_size[1] * 1.25,
                             text_box_size[0],
                             text_box_size[1])
     return {'from': from_box, 'to': to_box, 'max_dist': max_dist_box}
@@ -66,18 +67,18 @@ def draw_window():
     global images
     map = images['map']
     size = map.get_rect().size
-    ratio = BOARDWIDTH / size[0]
+    ratio = SCREEN_WIDTH / size[0]
     images['map'] = pg.transform.smoothscale(map, (int(size[0] * ratio), int(size[1] * ratio)))
-    win.blit(map, (0, 0))
+    screen.blit(map, (0, 0))
 
 
-win = pg.display.set_mode((BOARDWIDTH, BOARDHEIGHT))
+screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pg.display.set_caption("Flight Paths")
 images = load_images()
 locations = populate_locations()
 input_boxes = populate_input_boxes()
 
-# Game Loop
+# Main Loop
 run = True
 while run:
     draw_window()
@@ -87,11 +88,21 @@ while run:
         for box in input_boxes.values():
             box.handle_event(event)
 
+    for box in input_boxes.items():
+        if box[0] == "to":
+            if box[1].text != current_path[0]:
+                current_path[0] = box[1].text
+                # draw paths
+        elif box[0] == "from":
+            if box[1].text != current_path[1]:
+                current_path[1] = box[1].text
+                # draw paths
+
     for box in input_boxes.values():
         box.update()
 
     for box in input_boxes.values():
-        box.draw(win)
+        box.draw(screen)
 
     pg.display.update()
-    pg.time.delay(1000 // FRAMERATE)
+    pg.time.delay(1000 // FRAME_RATE)
