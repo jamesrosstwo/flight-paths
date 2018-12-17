@@ -1,13 +1,15 @@
 class InputBox:
-
-    def __init__(self, pygame, x, y, w, h, text=''):
+    def __init__(self, pygame, label, x, y, w, h, text=''):
         self.pg = pygame
-        self.COLOR_INACTIVE = self.pg.Color('lightskyblue3')
+        self.COLOR_INACTIVE = self.pg.Color('black')
         self.COLOR_ACTIVE = self.pg.Color('dodgerblue2')
         self.color = self.COLOR_INACTIVE
         self.FONT = self.pg.font.Font("resources/fonts/Roboto.ttf", 32)
+        self.LABEL_FONT = self.pg.font.Font("resources/fonts/Roboto.ttf", 18)
         self.rect = pygame.Rect(x, y, w, h)
         self.text = text
+        self.label = label
+        self.label_surface = self.LABEL_FONT.render(label, True, self.pg.Color('black'))
         self.txt_surface = self.FONT.render(text, True, self.COLOR_INACTIVE)
         self.active = False
 
@@ -39,6 +41,8 @@ class InputBox:
         self.rect.w = width
 
     def draw(self, screen):
+        # Blit the label
+        screen.blit(self.label_surface, (self.rect.x - len(self.label) * 12, self.rect.y + 7))
         # Blit the text.
         screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
         # Blit the rect.

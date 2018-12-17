@@ -5,7 +5,7 @@ from InputBox import InputBox
 pg.init()
 
 BOARDWIDTH = 1500
-BOARDHEIGHT = 800
+BOARDHEIGHT = 900
 FRAMERATE = 60
 
 
@@ -40,9 +40,25 @@ def populate_locations():
 
 
 def populate_input_boxes():
-    from_box = InputBox(pg, 0, 0, 140, 40)
-    to_box = InputBox(pg, 100, 300, 140, 40)
-    max_dist_box = InputBox(pg, 100, 300, 140, 40)
+    text_box_size = (140, 40)
+    from_box = InputBox(pg,
+                        "From",
+                        text_box_size[0] / 2,
+                        BOARDHEIGHT - text_box_size[1] * 1.25,
+                        text_box_size[0],
+                        text_box_size[1])
+    to_box = InputBox(pg,
+                      "To",
+                      BOARDWIDTH / 2 - text_box_size[0] / 2,
+                      BOARDHEIGHT - text_box_size[1] * 1.25,
+                      text_box_size[0],
+                      text_box_size[1])
+    max_dist_box = InputBox(pg,
+                            "Range",
+                            BOARDWIDTH - text_box_size[0] * 3 / 2,
+                            BOARDHEIGHT - text_box_size[1] * 1.25,
+                            text_box_size[0],
+                            text_box_size[1])
     return {'from': from_box, 'to': to_box, 'max_dist': max_dist_box}
 
 
