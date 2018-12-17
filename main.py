@@ -42,7 +42,8 @@ def populate_locations():
 def populate_input_boxes():
     from_box = InputBox(pg, 0, 0, 140, 40)
     to_box = InputBox(pg, 100, 300, 140, 40)
-    return {'from': from_box, 'to': to_box}
+    max_dist_box = InputBox(pg, 100, 300, 140, 40)
+    return {'from': from_box, 'to': to_box, 'max_dist': max_dist_box}
 
 
 def draw_window():
@@ -58,7 +59,7 @@ win = pg.display.set_mode((BOARDWIDTH, BOARDHEIGHT))
 pg.display.set_caption("Flight Paths")
 images = load_images()
 locations = populate_locations()
-input_boxes = InputBox.populate_input_boxes()
+input_boxes = populate_input_boxes()
 
 # Game Loop
 run = True
@@ -67,13 +68,13 @@ while run:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
-        for box in input_boxes:
+        for box in input_boxes.values():
             box.handle_event(event)
 
-    for box in input_boxes:
+    for box in input_boxes.values():
         box.update()
 
-    for box in input_boxes:
+    for box in input_boxes.values():
         box.draw(win)
 
     pg.display.update()
