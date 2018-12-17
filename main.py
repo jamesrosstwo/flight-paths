@@ -7,7 +7,8 @@ pg.init()
 SCREEN_WIDTH = 1500
 SCREEN_HEIGHT = 750
 FRAME_RATE = 60
-current_path = ["", ""]
+# from, to, max distance
+current_path = ["", "", 1000]
 
 
 def load_images():
@@ -59,7 +60,8 @@ def populate_input_boxes():
                             SCREEN_WIDTH - text_box_size[0] * 3 / 2,
                             SCREEN_HEIGHT - text_box_size[1] * 1.25,
                             text_box_size[0],
-                            text_box_size[1])
+                            text_box_size[1],
+                            text='1000')
     return {'from': from_box, 'to': to_box, 'max_dist': max_dist_box}
 
 
@@ -80,6 +82,28 @@ input_boxes = populate_input_boxes()
 
 # Main Loop
 run = True
+
+
+def redraw_paths():
+    print("redraw")
+
+
+def update_boxes():
+    for box in input_boxes.items():
+        if box[0] == "to":
+            if box[1].text != current_path[0]:
+                current_path[0] = box[1].text
+                redraw_paths()
+        elif box[0] == "from":
+            if box[1].text != current_path[1]:
+                current_path[1] = box[1].text
+                redraw_paths()
+        elif box[0] == "max_dist":
+            if int(box[1].text) != int(current_path[2]):
+                current_path[2] = int(box[1].text)
+                redraw_paths()
+
+
 while run:
     draw_window()
     for event in pg.event.get():
@@ -88,15 +112,7 @@ while run:
         for box in input_boxes.values():
             box.handle_event(event)
 
-    for box in input_boxes.items():
-        if box[0] == "to":
-            if box[1].text != current_path[0]:
-                current_path[0] = box[1].text
-                # draw paths
-        elif box[0] == "from":
-            if box[1].text != current_path[1]:
-                current_path[1] = box[1].text
-                # draw paths
+    update_boxes()
 
     for box in input_boxes.values():
         box.update()
