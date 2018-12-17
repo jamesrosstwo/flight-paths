@@ -31,7 +31,11 @@ class InputBox:
                 elif event.key == self.pg.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
-                    self.text += event.unicode
+                    try:
+                        self.text += event.unicode
+                        int(self.text)
+                    except ValueError:
+                        self.text = self.text[:-1]
                 # Re-render the text.
                 self.txt_surface = self.FONT.render(self.text, True, self.COLOR_INACTIVE)
 
