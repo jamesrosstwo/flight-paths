@@ -24,7 +24,6 @@ def drawWindow():
     size = map.get_rect().size
     ratio = BOARDWIDTH / size[0]
     images['map'] = pygame.transform.smoothscale(map, (int(size[0] * ratio), int(size[1] * ratio)))
-
     win.blit(map, (0, 0))
     pygame.display.update()
 
@@ -39,6 +38,6 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-    pygame.time.delay(1000 // FRAMERATE)
 
     drawWindow()
+    pygame.time.delay(1000 // FRAMERATE)
