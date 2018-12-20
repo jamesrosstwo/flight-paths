@@ -43,18 +43,21 @@ def populate_locations():
 
 
 def draw_paths(g):
-    for edge in g.edges.items():
-        for dest in edge[1]:
-            # print(locations[edge[0]], "->", locations[dest])
-            pg.draw.line(screen, pg.Color("black"), locations[edge[0]], locations[dest])
+    # for edge in g.edges.items():
+    #     for dest in edge[1]:
+    #         print(locations[edge[0]], "->", locations[dest])
+    #         pg.draw.line(screen, pg.Color("black"), locations[edge[0]], locations[dest])
+    if current_path[0] in locations.keys() and current_path[1] in locations.keys():
+        path = map_graph.shortest_path(current_path[0], current_path[1])
+        for i in range(len(path) - 1):
+            pg.draw.line(screen, pg.Color("black"), locations[path[i]], locations[path[i+1]])
     pg.display.flip()
-
 
 
 def create_map(places):
     g = Map()
     for location in places:
-        g.add_vertex(location[0])
+        g.add_vertex(location)
     for i in places.items():
         for j in places.items():
             if i != j:
