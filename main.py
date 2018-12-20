@@ -35,10 +35,11 @@ def populate_locations():
            'Chennai': (1082, 445), 'Bangalore': (1073, 455), 'Calcutta': (1113, 409), 'Lahore': (1058, 356),
            'Dhaka': (1129, 400), 'Chittagong': (1136, 409), 'Bangkok': (1170, 441), 'Ho Chi Minh City': (1195, 456),
            'Singapore': (1183, 492), 'Jakarta': (1202, 526), 'Foshan': (1211, 405), 'Guangzhou': (1216, 404),
-           'Shenzhen': (1225, 406), 'Dongguan': (1223, 400), 'Hong Kong': (1232, 408), 'Manila': (1253, 439),
+           'Shenzhen': (1225, 406), 'Dongguan': (1223, 400), 'Hong K    ong': (1232, 408), 'Manila': (1253, 439),
            'Chongqing': (1196, 379), 'Chengdu': (1182, 365), 'Wuhan': (1218, 375), 'Hangzhou': (1245, 384),
            'Shanghai': (1254, 370), 'Nanjing': (1237, 364), 'Beijing': (1233, 322), 'Tienjin': (1238, 332),
-           'Seoul': (1280, 337), 'Shenyang': (1256, 310), 'Harbin': (1273, 291), 'Osaka': (1273, 291)}
+           'Seoul': (1280, 337), 'Shenyang': (1256, 310), 'Harbin': (1273, 291), 'Osaka': (1273, 291),
+           'Nuuk': (540, 179), "Reykjavik": (663, 186), "Freetown": (701, 464)}
     return out
 
 
@@ -50,7 +51,7 @@ def draw_paths(g):
     if current_path[0] in locations.keys() and current_path[1] in locations.keys():
         path = map_graph.shortest_path(current_path[0], current_path[1])
         for i in range(len(path) - 1):
-            pg.draw.line(screen, pg.Color("black"), locations[path[i]], locations[path[i+1]])
+            pg.draw.line(screen, pg.Color("black"), locations[path[i]], locations[path[i + 1]])
     pg.display.flip()
 
 
@@ -137,6 +138,8 @@ def update_boxes():
 while run:
     draw_window()
     for event in pg.event.get():
+        # if event.type == 5:
+        #     print(pg.mouse.get_pos())
         if event.type == pg.QUIT:
             run = False
         for box in input_boxes.values():
